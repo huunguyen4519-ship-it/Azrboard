@@ -47,9 +47,6 @@ android {
         targetSdk = 36
         versionCode = providers.of(GitCommitCountValueSource::class.java) {}.get()
         versionName = "2.5.9"
-        buildConfigField("String", "CONTENT_PROVIDER_AUTHORITY", "\"${applicationId}.stickercontentprovider\"")
-        manifestPlaceholders["stickerAuthority"] = "${applicationId}.stickercontentprovider"
-        manifestPlaceholders["stickerProviderAuthority"] = "${applicationId}.stickercontentprovider"
         ndk {
             abiFilters.clear()
             abiFilters.addAll(listOf("armeabi-v7a", "arm64-v8a", "x86", "x86_64"))
@@ -81,7 +78,6 @@ android {
             isMinifyEnabled = false
             isJniDebuggable = false
             applicationIdSuffix = ".debug"
-            manifestPlaceholders["stickerProviderAuthority"] = "${defaultConfig.applicationId}.debug.stickercontentprovider"
         }
         create("runTests") { // build variant for running tests on CI that skips tests known to fail
             isMinifyEnabled = false
@@ -93,7 +89,6 @@ android {
             isJniDebuggable = false
             signingConfig = signingConfigs.getByName("debug")
             applicationIdSuffix = ".debug"
-            manifestPlaceholders["stickerProviderAuthority"] = "${defaultConfig.applicationId}.debug.stickercontentprovider"
         }
 
         androidComponents.onVariants { variant: ApplicationVariant ->

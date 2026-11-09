@@ -12,23 +12,12 @@ import java.io.File
 class Database private constructor(context: Context, name: String = NAME) : SQLiteOpenHelper(context, name, null, VERSION) {
     override fun onCreate(db: SQLiteDatabase) {
         db.execSQL(ClipboardDao.CREATE_TABLE)
-        db.execSQL(KlipyHistoryDao.CREATE_TABLE)
         onUpgrade(db, 0, VERSION)
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
         if (oldVersion <= 1) {
             db.execSQL(GestureDataDao.CREATE_TABLE)
-        }
-        if (oldVersion <= 2) {
-            db.execSQL(KlipyHistoryDao.CREATE_TABLE)
-        }
-        if (oldVersion <= 3) {
-            addColumnIfMissing(db, KlipyHistoryDao.TABLE_NAME, KlipyHistoryDao.COLUMN_PREVIEW_URL, "TEXT")
-        }
-        if (oldVersion <= 4) {
-            addColumnIfMissing(db, KlipyHistoryDao.TABLE_NAME, KlipyHistoryDao.COLUMN_PINNED, "INTEGER NOT NULL DEFAULT 0")
-            addColumnIfMissing(db, KlipyHistoryDao.TABLE_NAME, KlipyHistoryDao.COLUMN_PINNED_TIMESTAMP, "INTEGER NOT NULL DEFAULT 0")
         }
     }
 
